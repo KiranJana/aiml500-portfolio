@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>On-Call Drill Coach | Hari Kiran Jana</title>
+<meta name="description" content="Artifact 1: an AI chatbot that lets new on-call engineers practice the first 15 minutes of an incident.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="../">Hari Kiran Jana</a>
+    <nav><a href="../#about">About</a><a href="../#artifacts">Work</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="art-hero">
+    <figure class="cover">
+      <img src="../assets/drill-coach/banner.png" alt="On-Call Drill Coach: practice the first 15 minutes of an incident">
+    </figure>
+    <div class="actions">
+      <a class="btn" href="https://mizou.com/preview-bot?ID=165612">Try the bot →</a>
+      <a class="btn ghost" href="../assets/drill-coach/AI-Lab-documentation.pdf">Full build documentation (PDF)</a>
+    </div>
+  </div>
+
+  <section>
+    <p class="label">Title</p>
+    <h1>On-Call Drill Coach: an AI practice partner for new on-call engineers</h1>
+    <ul class="chips"><li>Artifact 1</li><li>AI chatbot</li><li>Design Thinking</li><li>Mizou</li></ul>
+  </section>
+
+  <section>
+    <h2>Introduction</h2>
+    <p>Most engineers learn incident response during a real incident, which is the worst possible time to learn it. When I started as a backend engineer, I couldn't fix a production failure on my own. On-Call Drill Coach gives new engineers a safe place to practice the first 15 minutes of an incident before their first real alert. This page explains what I built, how I built it, and how you could build one for your own team.</p>
+  </section>
+
+  <section>
+    <h2>Description</h2>
+    <p>On-Call Drill Coach is a chatbot built on Mizou. It plays "Coach Sam", a calm senior engineer who pages you with an invented alert and then reacts to what you do. It reveals the impact when you ask about users, reveals a specific recent change when you ask what changed, and asks you to stabilize, decide whether to escalate, and write a two-sentence status update. At the end it gives two things you did well, one thing to improve, and a score out of 5 on five habits: <strong>Impact, Changes, Stabilize, Escalate and Communicate</strong>.</p>
+    <div class="shots">
+      <figure>
+        <img src="../assets/drill-coach/escalation.jpg" alt="The bot asks the user to decide on escalation and warns that delaying is risky">
+        <figcaption>Mid-drill: the coach warns that delaying escalation is risky, then waits for the engineer's own decision.</figcaption>
+      </figure>
+      <figure>
+        <img src="../assets/drill-coach/feedback.jpg" alt="End-of-drill feedback with scores on five habits">
+        <figcaption>End of a drill: specific feedback and a score on each habit.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Objective</h2>
+    <p>I created this artifact for the AI Lab in AIML-500 to learn how to design an AI assistant with Design Thinking, and to solve a real problem I know from my own work: new on-call engineers have no safe way to practice.</p>
+  </section>
+
+  <section>
+    <h2>Process</h2>
+    <ol class="steps">
+      <li><strong>Empathize.</strong> I listed what new on-call engineers struggle with: freezing at the first alert, fixing before checking impact, waiting too long to escalate, and thin communication.</li>
+      <li><strong>Define.</strong> New on-call engineers need a safe way to practice the first 15 minutes of an incident without real systems or data.</li>
+      <li><strong>Ideate.</strong> I compared four ideas on impact, feasibility and user value, and rejected a runbook Q&amp;A bot because it would need real company documents in a third-party tool.</li>
+      <li><strong>Plan.</strong> I answered ten design questions: the objective, what it must never do, how it starts, the steps it follows, how it ends, and one test scenario for each rule.</li>
+      <li><strong>Build.</strong> Mizou limits instructions to 1,000 characters, so I put the drill steps in the instructions and the behavior in a separate rules field.</li>
+      <li><strong>Test and iterate.</strong> I ran full drills while deliberately trying to break each rule. Version 1 gave answers away, answered the escalation question for the user and scored too generously. Version 2 fixed all three.</li>
+    </ol>
+    <div class="shots">
+      <figure>
+        <img src="../assets/drill-coach/v1-gave-answer.jpg" alt="Version 1 telling the user what to do">
+        <figcaption>Version 1: asked for the answer, it simply gave it.</figcaption>
+      </figure>
+      <figure>
+        <img src="../assets/drill-coach/guiding-question.jpg" alt="Version 2 replying with a guiding question">
+        <figcaption>Version 2: it replies with one guiding question instead.</figcaption>
+      </figure>
+    </div>
+    <h3>Test results</h3>
+    <div class="table">
+      <table>
+        <tr><th>What I tested</th><th>Version 1</th><th>Version 2</th></tr>
+        <tr><td>Refuses to just give the answer</td><td class="fail">Failed</td><td class="pass">Passed</td></tr>
+        <tr><td>Lets the user make the escalation decision</td><td class="fail">Failed</td><td class="pass">Passed</td></tr>
+        <tr><td>Names a specific recent change</td><td class="part">Vague</td><td class="pass">Specific</td></tr>
+        <tr><td>Strict scoring</td><td class="part">Generous</td><td class="pass">Stricter</td></tr>
+        <tr><td>Rejects pasted real-looking data</td><td class="part">Partial</td><td class="part">Partial</td></tr>
+      </table>
+    </div>
+    <h3>Build your own: what I'd tell another team</h3>
+    <ul>
+      <li>Write one test scenario for every rule before you build, then try to break each rule on purpose.</li>
+      <li>Put "never give the answer" and "wait for the user's decision" in the rules explicitly. Models default to being helpful by answering.</li>
+      <li>Use invented scenarios only. Mizou's terms let it copy and display anything you put in a bot.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Tools and Technologies Used</h2>
+    <ul class="tools">
+      <li><strong>Mizou</strong>Chatbot builder and hosting (free plan)</li>
+      <li><strong>Design Thinking</strong>Empathize, Define, Ideate, Prototype, Test</li>
+      <li><strong>Claude (Anthropic)</strong>Helped draft the bot text and documentation and ran test drills with me</li>
+      <li><strong>Python</strong>Checked each field against Mizou's character limits</li>
+      <li><strong>GitHub Pages</strong>Hosts this portfolio</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Value Proposition</h2>
+    <p>This artifact shows that I can turn a real engineering pain point into a working AI tool, and that I don't stop at "it works": I test it against how it can fail and fix what I find. For teams, it is a ready-to-use practice tool and a template for building safe internal assistants.</p>
+  </section>
+
+  <section>
+    <h2>Unique Value</h2>
+    <p>Most incident-response material is a checklist you read. This is practice you do, and it coaches the human habits (escalating early and communicating clearly) that technical runbooks usually skip. It comes from an engineer who has been the new person who couldn't fix production alone.</p>
+  </section>
+
+  <section>
+    <h2>Relevance</h2>
+    <p>Teams are adding AI assistants quickly, often without testing how they behave when users push them. Onboarding new engineers to on-call is also a lasting, expensive problem. This artifact sits where the two meet: a low-cost way to build confidence in new engineers, and a model of the careful, test-first approach to AI adoption I want to lead.</p>
+  </section>
+
+  <section>
+    <h2>References</h2>
+    <ul class="refs">
+      <li>Anthropic. (2026). <em>Claude</em> (Opus 5.5) [Large language model]. <a href="https://www.anthropic.com/claude">https://www.anthropic.com/claude</a></li>
+      <li>Mizou. (2023). <em>Terms and conditions</em>. <a href="https://school.mizou.com/p/terms">https://school.mizou.com/p/terms</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><a href="../">← Back to portfolio</a> · Artifact 1 of the AIML-500 professional portfolio</div>
+</footer>
+</body>
+</html>
