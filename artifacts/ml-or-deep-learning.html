@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ML or Deep Learning? | Hari Kiran Jana</title>
+<meta name="description" content="Artifact 2: a guide to choosing between traditional machine learning and deep learning, based on two documented systems.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="../">Hari Kiran Jana</a>
+    <nav><a href="../#about">About</a><a href="../#artifacts">Work</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="art-hero">
+    <figure class="cover">
+      <img src="../assets/ml-vs-dl/banner.png" alt="ML or Deep Learning? Two real cases and the questions to ask first: churn at SyriaTel and translation at Google">
+    </figure>
+    <div class="actions">
+      <a class="btn" href="../assets/ml-vs-dl/ML-vs-DL-report.pdf">Read the full report (PDF) →</a>
+      <a class="btn ghost" href="#decide">Jump to the decision guide</a>
+    </div>
+  </div>
+
+  <section>
+    <p class="label">Title</p>
+    <h1>Machine Learning or Deep Learning? A decision guide from two real systems</h1>
+    <ul class="chips"><li>Artifact 2</li><li>Report</li><li>Machine learning</li><li>Deep learning</li></ul>
+  </section>
+
+  <section>
+    <h2>Introduction</h2>
+    <p>When a team starts its first AI project, someone usually suggests deep learning, because it is behind the tools everyone is talking about. But a lot of the problems a backend team actually gets, like predicting which customers will leave or which tickets will escalate, start as rows in a database. This guide helps answer one question before anyone picks a model: does this problem need deep learning? It is based on a report I wrote comparing two documented production systems, one built with traditional machine learning and one built with deep learning.</p>
+  </section>
+
+  <section>
+    <h2>Description</h2>
+    <p>The report takes two examples from my course's lesson on machine learning and deep learning and ties each one to a real system described by the team that built it.</p>
+    <ul>
+      <li><strong>Machine learning: customer churn at SyriaTel.</strong> A Syrian telecom company predicted which customers would leave using XGBoost, a tree-based model, and reached an AUC of 93.3%. Features the team designed by hand, such as the share of a customer's contacts who used the competing network, raised the AUC from 84% to 93.3%. In a live test on 7.5 million prepaid customers, about 47% of the predicted churners who got a retention offer stayed (Ahmad et al., 2019).</li>
+      <li><strong>Deep learning: Google Neural Machine Translation.</strong> Google moved all Chinese-to-English translation in Google Translate from its phrase-based system to a deep LSTM network with 8 encoder and 8 decoder layers. The new system reduced translation errors by an average of 60% in human evaluations. Training one basic English-to-French model used 36 million sentence pairs and took about 6 days on 96 GPUs (Wu et al., 2016).</li>
+    </ul>
+    <figure id="decide">
+      <img src="../assets/ml-vs-dl/decision-flow.png" alt="Decision flowchart. First question: what form does the input data take? For structured records, ask whether the people acting on the result need the reasons behind each prediction: if yes, traditional ML on engineered features (example: SyriaTel churn with XGBoost); if no, ML is still the usual starting point for tabular data. For unstructured text, images or audio, ask whether there is a large labeled dataset and the computing power to train on it: if no, ML on hand-built features; if yes, deep learning (example: Google Neural Machine Translation)">
+      <figcaption>The decision guide from the report: two questions, and where each case lands.</figcaption>
+    </figure>
+    <h3>The two cases at a glance</h3>
+    <div class="table">
+      <table>
+        <tr><th>Factor</th><th>Churn (SyriaTel)</th><th>Translation (Google)</th></tr>
+        <tr><td>Input</td><td>One row of engineered features per customer</td><td>Raw sentences</td></tr>
+        <tr><td>Who defines the features</td><td>The team (hundreds of them)</td><td>Learned by the network</td></tr>
+        <tr><td>Data</td><td>Nine months of records, about 70 TB raw</td><td>36 million sentence pairs for English to French alone</td></tr>
+        <tr><td>Computing</td><td>12-node Hadoop and Spark cluster</td><td>About 6 days on 96 NVIDIA K80 GPUs per basic model</td></tr>
+        <tr><td>Need to explain each result</td><td>High: a retention team needs reasons it can check</td><td>Lower: users judge the translation itself</td></tr>
+        <tr><td>Reported result</td><td>AUC 93.3%</td><td>Errors down an average of 60% versus phrase-based</td></tr>
+      </table>
+    </div>
+    <p class="note">Sources: Ahmad et al. (2019); Le and Schuster (2016); Wu et al. (2016). The "need to explain" row is my own assessment.</p>
+  </section>
+
+  <section>
+    <h2>Objective</h2>
+    <p>I wrote the original report for Assignment 2.3 in AIML-500. The assignment asked for one machine learning example and one deep learning example from the lesson, a real-world application of each, and an explanation of why each approach fits its problem and why the other one doesn't. For this portfolio, I rewrote it as a guide for engineers and team leads who are deciding how to approach their first AI or ML feature.</p>
+  </section>
+
+  <section>
+    <h2>Process</h2>
+    <ol class="steps">
+      <li><strong>Pick the examples.</strong> I chose two examples from the lesson that sit at opposite ends of its key differences: churn prediction works on business records that already fit in tables, and translation works on raw text. I passed on spam detection because the lesson uses it as both a machine learning and a deep learning example.</li>
+      <li><strong>Find real systems.</strong> I looked for cases documented by the teams that built them: SyriaTel's paper in the <em>Journal of Big Data</em>, and Google's research paper and announcement.</li>
+      <li><strong>Read the primary sources.</strong> I kept a source notes file with every number in the report next to the quote and page it came from. The journal's site asked for a login, so I read the authors' arXiv copy, which has the same page numbers.</li>
+      <li><strong>Check every claim.</strong> Each figure and quotation was checked against its source, and three sentences in the draft were cut because the sources didn't say them. One said the feature ranking guided SyriaTel's retention offers. The paper reports the ranking but never says that.</li>
+      <li><strong>Keep conflicting numbers apart.</strong> Google's announcement reports error reductions of 55% to 85% on several language pairs, and the paper reports an average of 60%. They come from different evaluations, so the report gives both and doesn't combine them.</li>
+      <li><strong>Test the comparison.</strong> A neural network churn model at another telecom company reported 91.1% accuracy. With about 5% of customers churning, a model that predicts "stays" for everyone is about 95% accurate, so accuracy can't show which model is better.</li>
+      <li><strong>Turn it into a decision.</strong> I turned the comparison into the flowchart above, using the lesson's key differences as the questions.</li>
+    </ol>
+    <h3>What I'd tell another team</h3>
+    <ul>
+      <li>Look at the form of your data before you pick a model. If it is already a table of fields people understand, start with a tree-based model. In a 2022 benchmark, tree-based models still performed best on medium-sized tabular data, about 10,000 samples (Grinsztajn et al., 2022).</li>
+      <li>Ask who will act on the result. A retention team needs reasons it can check. SyriaTel's team could rank which features drove the model's predictions. A deep network wouldn't give that ranking as directly.</li>
+      <li>Don't judge a model on accuracy when the thing you're predicting is rare. At 5% churn, a model that never predicts churn is 95% accurate. Use a measure such as AUC.</li>
+      <li>Deep learning earns its place when the signal is in text, images or audio. If your churn signal were in support tickets or call recordings, deep learning would be worth it, at least to turn that data into features. AIMultiple lists churn prevention from customer feedback as a deep learning use case (Dilmegani, 2026).</li>
+      <li>Count the cost first. A team without tens of millions of examples and a lot of computing power would struggle to build something like Google's system from scratch.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Tools and Technologies Used</h2>
+    <ul class="tools">
+      <li><strong>Primary sources</strong><em>Journal of Big Data</em>, NeurIPS proceedings, arXiv and the Google Research blog</li>
+      <li><strong>Crossref and arXiv</strong>Citation details and full-text copies of the papers</li>
+      <li><strong>Microsoft Word</strong>The report and its PDF export</li>
+      <li><strong>Python (matplotlib)</strong>Drew the decision flowchart</li>
+      <li><strong>Claude (Anthropic)</strong>Checked every figure and quotation against the sources, ran the spell check, and helped polish the wording</li>
+      <li><strong>GitHub Pages</strong>Hosts this portfolio</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Value Proposition</h2>
+    <p>This artifact shows that I choose a machine learning approach based on the data and the people who will use the result, and that I back each claim with a source someone else can check. For a team starting its first AI feature, it is a quick way to decide whether deep learning is worth the cost before committing to it.</p>
+  </section>
+
+  <section>
+    <h2>Unique Value</h2>
+    <p>Most comparisons of machine learning and deep learning are general lists of pros and cons. This one is built on two production systems described by the teams that built them, and every number traces to a page in a primary source. It also shows when the answer would change: the same churn problem would call for deep learning if the main signal were in free-text complaints instead of billing records.</p>
+  </section>
+
+  <section>
+    <h2>Relevance</h2>
+    <p>Teams are under pressure to add AI, and the best-known AI tools are deep learning models. Choosing deep learning when a simpler model fits costs computing power and makes the results harder to explain. The questions in this guide fit the first ML feature many teams build: predicting something from data they already store.</p>
+  </section>
+
+  <section>
+    <h2>References</h2>
+    <ul class="refs">
+      <li>Ahmad, A. K., Jafar, A., &amp; Aljoumaa, K. (2019). Customer churn prediction in telecom using machine learning in big data platform. <em>Journal of Big Data, 6</em>, Article 28. <a href="https://doi.org/10.1186/s40537-019-0191-6">https://doi.org/10.1186/s40537-019-0191-6</a></li>
+      <li>Anthropic. (2026). <em>Claude</em> (Opus 5.5) [Large language model]. <a href="https://www.anthropic.com/claude">https://www.anthropic.com/claude</a></li>
+      <li>Dilmegani, C. (2026, March 10). <em>Top 50 deep learning use case &amp; case studies</em>. AIMultiple. <a href="https://aimultiple.com/deep-learning-applications">https://aimultiple.com/deep-learning-applications</a></li>
+      <li>Grinsztajn, L., Oyallon, E., &amp; Varoquaux, G. (2022). Why do tree-based models still outperform deep learning on typical tabular data? <em>Advances in Neural Information Processing Systems, 35</em>, 507–520. <a href="https://doi.org/10.52202/068431-0037">https://doi.org/10.52202/068431-0037</a></li>
+      <li>Le, Q. V., &amp; Schuster, M. (2016, September 27). <em>A neural network for machine translation, at production scale</em>. Google Research. <a href="https://research.google/blog/a-neural-network-for-machine-translation-at-production-scale/">https://research.google/blog/a-neural-network-for-machine-translation-at-production-scale/</a></li>
+      <li>Wu, Y., Schuster, M., Chen, Z., Le, Q. V., Norouzi, M., Macherey, W., Krikun, M., Cao, Y., Gao, Q., Macherey, K., Klingner, J., Shah, A., Johnson, M., Liu, X., Kaiser, Ł., Gouws, S., Kato, Y., Kudo, T., Kazawa, H., . . . Dean, J. (2016). <em>Google's neural machine translation system: Bridging the gap between human and machine translation</em> (arXiv:1609.08144). arXiv. <a href="https://doi.org/10.48550/arXiv.1609.08144">https://doi.org/10.48550/arXiv.1609.08144</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><a href="../">← Back to portfolio</a> · Artifact 2 of the AIML-500 professional portfolio</div>
+</footer>
+</body>
+</html>
