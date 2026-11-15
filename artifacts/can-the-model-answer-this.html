@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Can the Model Answer This? | Hari Kiran Jana</title>
+<meta name="description" content="Artifact 3: a five-question check for deciding when an internal AI assistant can answer from the model alone and when it needs a tool, a document or a person.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="../">Hari Kiran Jana</a>
+    <nav><a href="../#about">About</a><a href="../#artifacts">Work</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="art-hero">
+    <figure class="cover">
+      <img src="../assets/llm-check/banner.png" alt="Can the Model Answer This? A Good Fit / Danger Zone check for your first AI assistant. Live, private, rare, exact, high stakes.">
+    </figure>
+    <div class="actions">
+      <a class="btn" href="../assets/llm-check/Professor-Predict-session.pdf">Read my full session with the AI tutor (PDF) →</a>
+      <a class="btn ghost" href="#check">Jump to the five-question check</a>
+    </div>
+  </div>
+
+  <section>
+    <p class="label">Title</p>
+    <h1>Can the Model Answer This? A Good Fit / Danger Zone check for your first AI assistant</h1>
+    <ul class="chips"><li>Artifact 3</li><li>Checklist</li><li>Large language models</li><li>Hallucination</li></ul>
+  </section>
+
+  <section>
+    <h2>Introduction</h2>
+    <p>The first demo of an internal AI assistant usually goes well. It explains a concept clearly, drafts a decent message and sounds sure of itself. The trouble starts when someone asks it about a service that changed last week, or how many incidents the team had last quarter, and it answers just as smoothly with something that isn't true. This page is a short check for deciding which questions an assistant can answer from the model alone and which ones need a tool, a document or a person behind them. It comes from a course exercise where I played the part of a language model and caught myself making up an answer.</p>
+  </section>
+
+  <section>
+    <h2>Description</h2>
+    <p>In the exercise, an AI tutor called Professor Predict asked me to finish sentences with whatever felt most likely, without looking anything up. "The capital of France is" was easy. Then it asked me to finish this one:</p>
+    <p><strong>"The current president of the small island nation of Velmora, founded in 1998, is ___"</strong></p>
+    <p>I suspected Velmora wasn't a real country, and I still wrote "John Newgate," because the sentence was asking for a name. Velmora was made up. That small moment is the mechanism behind a lot of AI mistakes. A language model is pretrained to predict the next word from the words before it, so a sentence that ends in "is ___" pulls toward something shaped like an answer, whether or not a real answer exists. Researchers at OpenAI and Georgia Tech showed that this pretraining creates pressure toward made-up answers even with error-free training data: facts that appear only once or rarely in the data lead to errors, while patterns that repeat, such as grammar, don't (Kalai et al., 2026).</p>
+    <p>Assistant models then get more training to follow instructions. OpenAI's InstructGPT work showed that training with human feedback made answers more truthful, but the models still made simple mistakes (Ouyang et al., 2022). Nothing in either stage checks each answer against reality. So the useful question for a team is which kinds of questions are risky, and what to put behind them.</p>
+
+    <figure id="check">
+      <img src="../assets/llm-check/check-chart.png" alt="Flowchart titled Ask these five questions before the assistant answers on its own. Question 1: does the answer depend on live data, such as prices, service status or today's date? If yes, call a search tool or an API. Question 2: does it need private or internal information, such as your runbooks or someone's messages? If yes, supply the documents with the question. Question 3: is the material rare in public text, such as low-resource languages or obscure facts? If yes, have an expert or native speaker review it. Question 4: does it have to be exact, such as arithmetic, counts or totals? If yes, use a calculator or run code. Question 5: is the cost of a wrong answer high, such as legal, medical or production changes? If yes, a qualified person signs off. If all five are no, it is a Good Fit: drafting, explaining well-known ideas, brainstorming, summarizing text you supply. Still read it before you use it.">
+      <figcaption>The five-question check. A "yes" doesn't mean the model will be wrong. It means the answer needs backup before anyone relies on it.</figcaption>
+    </figure>
+
+    <h3 id="tasks">The ten tasks I classified</h3>
+    <p>The last part of the exercise gave me ten tasks to sort into Good Fit or Danger Zone, assuming the model had no search, calculator, database or supplied document. These are my calls and my reasons, with the backup each Danger Zone task needs.</p>
+    <div class="table">
+      <table>
+        <tr><th>Task</th><th>My call</th><th>Why</th><th>What makes it safe</th></tr>
+        <tr><td>Drafting a cover letter</td><td class="pass">Good Fit</td><td>A very common kind of writing</td><td>Check the personal facts; the model doesn't know your history</td></tr>
+        <tr><td>Explaining binary search</td><td class="pass">Good Fit</td><td>Explained everywhere online and in textbooks</td><td>A quick read-through</td></tr>
+        <tr><td>Writing a poem in the style of a public-domain poet</td><td class="pass">Good Fit</td><td>Creative and pattern-based</td><td>Nothing extra</td></tr>
+        <tr><td>Brainstorming product names</td><td class="pass">Good Fit</td><td>Volume of ideas matters more than accuracy</td><td>Trademark and market checks before using a name</td></tr>
+        <tr><td>Giving a company's current stock price</td><td class="fail">Danger Zone</td><td>Live data; training data stops at a point in time</td><td>A search tool or market data API</td></tr>
+        <tr><td>Summarizing research published last week</td><td class="fail">Danger Zone</td><td>Published after the training data was collected</td><td>Supply the paper or turn on search</td></tr>
+        <tr><td>Recalling a private conversation between two named people</td><td class="fail">Danger Zone</td><td>The model never saw it, so it would make it up, the way I made up John Newgate</td><td>Paste in the transcript; summarizing it is a different, reasonable task</td></tr>
+        <tr><td>Translating into a very low-resource language</td><td class="fail">Danger Zone</td><td>Much less training text, and mistakes are hard to spot</td><td>Review by a native speaker</td></tr>
+        <tr><td>Exact multi-digit multiplication</td><td class="fail">Danger Zone</td><td>The model predicts digits that look plausible; it isn't doing the math</td><td>A calculator or code</td></tr>
+        <tr><td>Legal advice for one person's situation</td><td class="fail">Danger Zone</td><td>Depends on the jurisdiction and the facts, and the stakes are high</td><td>A lawyer</td></tr>
+      </table>
+    </div>
+    <p class="note">Tasks come from the Professor Predict exercise in AIML-500. The calls and reasons are mine; the research behind them is under Process. The whole session, including my answers in every stage, is in the <a href="../assets/llm-check/Professor-Predict-session.pdf">session record (PDF)</a>.</p>
+  </section>
+
+  <section>
+    <h2>Objective</h2>
+    <p>I did the original exercise for Assignment 3.3 in AIML-500, an interactive session with an AI tutor about how large language models are trained and what that means for what they can and can't do reliably. It had four stages: finishing sentences as if I were the model, explaining the mechanism in my own words, guessing what kinds of text end up in training data, and sorting tasks into Good Fit or Danger Zone. For this portfolio, I turned my answers into a check that engineers and team leads can use while they decide what their first internal assistant should answer on its own.</p>
+  </section>
+
+  <section>
+    <h2>Process</h2>
+    <ol class="steps">
+      <li><strong>Played the model.</strong> I finished three sentences without looking anything up: Paris, "once upon a time," and the made-up president of Velmora. The third one is the lesson. I had a feeling the country wasn't real and filled the blank anyway.</li>
+      <li><strong>Explained it in my own words.</strong> My explanation was that at the end of the day the model has to generate an output. The tutor added two things I hadn't said: confidence is a pattern too, so a model sounds sure because confident text is common, and nobody has to be trying to trick it, because ordinary questions about obscure real facts cause the same problem.</li>
+      <li><strong>Guessed the training mix, and got corrected.</strong> I rated Wikipedia "a little" and full academic papers "a lot," because I was thinking about which sources are trustworthy. The question was how much of each a model sees. Wikipedia and public code are everywhere in web data, while paywalled papers are much rarer. I had also described training text as labeled right or wrong. It isn't: pretraining just predicts the next word, so a wrong sentence gets learned the same way as a right one.</li>
+      <li><strong>Sorted ten tasks.</strong> I classified the tasks in the table above and gave a reason for each one. The biggest surprise for me was low-resource languages. Models seem multilingual, but the training data is uneven, so output in those languages can sound fluent and still be wrong, and I wouldn't be able to tell.</li>
+      <li><strong>Checked the lessons against research.</strong> I didn't want this page to rest on what a chatbot told me, so I looked for a primary source behind each Danger Zone and read its abstract. Next-word pretraining and rare facts: Kalai et al. (2026). Exact arithmetic: when transformer models were tested on multi-digit multiplication, they matched patterns they had seen instead of learning a reliable method, and the authors argue that accuracy can fall off quickly as problems get more complex (Dziri et al., 2023). Low-resource languages: good translation needs large amounts of parallel text, which isn't equally available across the world's 7,000+ languages (NLLB Team et al., 2024). Supplying documents: models that retrieve passages before answering produced more specific and factual text (Lewis et al., 2020). Tools: language models struggle with arithmetic and fact lookup, and learning to call a calculator or search engine helped (Schick et al., 2023).</li>
+      <li><strong>Turned it into a check.</strong> I grouped the Danger Zone reasons into five questions and drew the flowchart, so a team can run a new kind of question through it in under a minute.</li>
+    </ol>
+    <h3>What I'd tell a team building its first internal assistant</h3>
+    <ul>
+      <li>Questions about your own systems are the "private" case. The model has never seen your runbooks, service names or incident history. Give it the documents with the question, and show which document the answer came from so people can check it.</li>
+      <li>"Is the payments service healthy right now?" is the "live" case. Have the assistant call the monitoring API and report what it gets back. Don't let it guess from what it learned in training.</li>
+      <li>Counts, totals and latency percentiles are the "exact" case. Let the assistant write and run the query, then report the number from the result.</li>
+      <li>Put a Velmora question in your test set. Ask the assistant about a service or a runbook that doesn't exist, and check that it says it can't find it instead of describing one.</li>
+      <li>Make "I don't know" an acceptable answer, and don't judge the assistant only by how many questions it answers. Kalai et al. (2026) found that scoring by accuracy alone rewards guessing over admitting uncertainty.</li>
+    </ul>
+    <h3>Where this check falls short</h3>
+    <ul>
+      <li>Five "no" answers don't make an answer correct. A Good Fit task can still go wrong, which is why the chart says to read the answer before using it.</li>
+      <li>The five questions are my own grouping from one course exercise and a handful of papers. I haven't tested the check on a real assistant yet, so it is a starting point for a team's own rules, not a standard.</li>
+      <li>For the research, I read each paper's abstract and checked my sentences against it. I didn't work through the full experiments.</li>
+      <li>Many assistants now have search or code tools built in. Those change which backup is already there, but someone still has to check that the tool was actually used.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Tools and Technologies Used</h2>
+    <ul class="tools">
+      <li><strong>Claude (Anthropic), Sonnet model</strong>Ran the AIML-500 Professor Predict tutor exercise</li>
+      <li><strong>Primary sources</strong><em>Nature</em>, NeurIPS proceedings and arXiv</li>
+      <li><strong>Crossref and OpenAlex</strong>Citation details and abstracts for each paper</li>
+      <li><strong>Python (matplotlib)</strong>Drew the banner and the five-question flowchart</li>
+      <li><strong>Claude (Anthropic)</strong>Checked each claim against the sources, ran the spell check, and helped polish the wording</li>
+      <li><strong>GitHub Pages</strong>Hosts this portfolio</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Value Proposition</h2>
+    <p>This artifact shows that I understand why language models make things up, and that I can turn that understanding into a practical rule a team can apply. For a team building its first internal assistant, it gives a quick way to decide where the model can answer on its own and where it needs search, documents, a calculator or a person, before users start trusting its answers.</p>
+  </section>
+
+  <section>
+    <h2>Unique Value</h2>
+    <p>Most advice about AI mistakes stops at "always double-check the output." This check says which questions need checking and what kind of backup each one needs. It starts from a mistake I made myself, and every Danger Zone on it is tied to a published paper. It also translates the course examples into the questions an engineering team actually asks: service status, internal runbooks and incident counts.</p>
+  </section>
+
+  <section>
+    <h2>Relevance</h2>
+    <p>Most teams' first AI project is an assistant that answers questions about their own work, and those are the questions a model is least able to answer from training alone, because they are private, current or exact. An assistant that answers them confidently and wrongly loses people's trust quickly. Knowing where the Danger Zones are is what tells a team which tools, documents and reviews to build in from the start.</p>
+  </section>
+
+  <section>
+    <h2>References</h2>
+    <ul class="refs">
+      <li>Anthropic. (2026). <em>Claude</em> (Opus 5.5) [Large language model]. <a href="https://www.anthropic.com/claude">https://www.anthropic.com/claude</a></li>
+      <li>Dziri, N., Lu, X., Sclar, M., Li, X. L., Jiang, L., Lin, B. Y., Welleck, S., West, P., Bhagavatula, C., Le Bras, R., Hwang, J., Sanyal, S., Ren, X., Ettinger, A., Harchaoui, Z., &amp; Choi, Y. (2023). Faith and fate: Limits of transformers on compositionality. <em>Advances in Neural Information Processing Systems, 36</em>, 70293–70332. <a href="https://doi.org/10.52202/075280-3081">https://doi.org/10.52202/075280-3081</a></li>
+      <li>Kalai, A. T., Nachum, O., Vempala, S. S., &amp; Zhang, E. (2026). Evaluating large language models for accuracy incentivizes hallucinations. <em>Nature, 653</em>(8116), 1047–1051. <a href="https://doi.org/10.1038/s41586-026-10549-w">https://doi.org/10.1038/s41586-026-10549-w</a></li>
+      <li>Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W., Rocktäschel, T., Riedel, S., &amp; Kiela, D. (2020). <em>Retrieval-augmented generation for knowledge-intensive NLP tasks</em> (arXiv:2005.11401). arXiv. <a href="https://doi.org/10.48550/arXiv.2005.11401">https://doi.org/10.48550/arXiv.2005.11401</a></li>
+      <li>NLLB Team, Costa-jussà, M. R., Cross, J., Çelebi, O., Elbayad, M., Heafield, K., Heffernan, K., Kalbassi, E., Lam, J., Licht, D., Maillard, J., Sun, A., Wang, S., Wenzek, G., Youngblood, A., Akula, B., Barrault, L., Gonzalez, G. M., Hansanti, P., . . . Wang, J. (2024). Scaling neural machine translation to 200 languages. <em>Nature, 630</em>(8018), 841–846. <a href="https://doi.org/10.1038/s41586-024-07335-x">https://doi.org/10.1038/s41586-024-07335-x</a></li>
+      <li>Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C., Mishkin, P., Zhang, C., Agarwal, S., Slama, K., Ray, A., Schulman, J., Hilton, J., Kelton, F., Miller, L., Simens, M., Askell, A., Welinder, P., Christiano, P., Leike, J., &amp; Lowe, R. (2022). Training language models to follow instructions with human feedback. <em>Advances in Neural Information Processing Systems, 35</em>, 27730–27744. <a href="https://doi.org/10.52202/068431-2011">https://doi.org/10.52202/068431-2011</a></li>
+      <li>Schick, T., Dwivedi-Yu, J., Dessì, R., Raileanu, R., Lomeli, M., Hambro, E., Zettlemoyer, L., Cancedda, N., &amp; Scialom, T. (2023). Toolformer: Language models can teach themselves to use tools. <em>Advances in Neural Information Processing Systems, 36</em>, 68539–68551. <a href="https://doi.org/10.52202/075280-2997">https://doi.org/10.52202/075280-2997</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><a href="../">← Back to portfolio</a> · Artifact 3 of the AIML-500 professional portfolio</div>
+</footer>
+</body>
+</html>
